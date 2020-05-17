@@ -6,24 +6,18 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.media.AudioManager
 import android.media.ToneGenerator
-import android.os.Build
 import android.os.ParcelUuid
 import android.util.Log
-import android.widget.Toast
-import com.google.android.material.internal.ContextUtils.getActivity
-import org.openexposuretrace.oextrace.MainActivity
 import org.openexposuretrace.oextrace.data.ADV_TAG
 import org.openexposuretrace.oextrace.data.Enums
 import org.openexposuretrace.oextrace.data.SCAN_TAG
 import org.openexposuretrace.oextrace.ext.data.insertLogs
 import org.openexposuretrace.oextrace.storage.BtContactsManager
 import org.openexposuretrace.oextrace.storage.BtEncounter
+import org.openexposuretrace.oextrace.distance.DistanceManager
 import org.openexposuretrace.oextrace.utils.CryptoUtil
 import org.openexposuretrace.oextrace.utils.CryptoUtil.base64EncodedString
-import java.io.File
-import java.time.LocalDateTime
 import java.util.*
-
 
 class DeviceManager(private val context: Context) {
 
@@ -238,23 +232,27 @@ class DeviceManager(private val context: Context) {
             "Recorded a contact with ${scanResult.device.address} RSSI ${scanResult.rssi}"
         )
 
-        val file = File(context.filesDir, "log_records.txt")
-        val currentDateTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDateTime.now()
-        } else {
-            TODO("VERSION.SDK_INT < O")
+        var distance = DistanceManager.calculateDistance(scanResult.rssi)
+
+        if (distance != null) {
+            if(distance < 2.0) {
+                Log.d("debug", "toast?")
+                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+                toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
+                //var mainActivity = MainActivity()
+                //mainActivity.popAlertNotification()
+            }
         }
-        file.appendText("\n" + "${currentDateTime} Scanned RSSI: ${scanResult.rssi}, - ${scanResult.device.address}")
 
-
-        if(scanResult.rssi < -60){
+        /*
+        if(scanResult.rssi < -30){
             Log.d("debug", "toast?")
             val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
             toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
-            var mainActivity = MainActivity()
-            mainActivity.popAlertNotification()
+            //var mainActivity = MainActivity()
+            //mainActivity.popAlertNotification()
         }
-
+*/
         closeConnection()
     }
 
