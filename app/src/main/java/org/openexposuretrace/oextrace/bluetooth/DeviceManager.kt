@@ -232,19 +232,12 @@ class DeviceManager(private val context: Context) {
 
         if (distance != null) {
             if(distance < 2.0) {
-<<<<<<< HEAD
-                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
-                toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
-                //var mainActivity = MainActivity()
-                //mainActivity.popAlertNotification()
-=======
                 Log.d("debug", "toast?")
                 val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 120)
                 toneG.startTone(ToneGenerator.TONE_CDMA_EMERGENCY_RINGBACK, 200)
 //                var mainActivity = MainActivity()
 //                mainActivity.popAlertNotification()
                 MainActivity.popAlertNotification()
->>>>>>> a67e771fc62dc9105ea645b00f86b9a08e465356
             }
         }
 
