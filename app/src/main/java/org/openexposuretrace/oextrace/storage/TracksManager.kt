@@ -114,7 +114,7 @@ object TracksManager : PreferencesHolder("tracks") {
         }
 
         val tracksData = TracksData(tracks = tracksByDay.values.toList())
-        apiClient.sendTracks(tracksData )
+        /*apiClient.sendTracks(tracksData )
             .enqueue(object : Callback<String> {
 
                 override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -125,7 +125,7 @@ object TracksManager : PreferencesHolder("tracks") {
                     println("ERROR: ${t.message}")
                 }
 
-            })
+            })*/
     }
 }
 

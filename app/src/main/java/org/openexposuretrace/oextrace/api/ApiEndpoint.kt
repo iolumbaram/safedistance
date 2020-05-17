@@ -12,6 +12,18 @@ import retrofit2.http.Query
 
 interface ApiEndpoint {
 
+    @POST("tracks")
+    fun sendTracks(@Body tracksData: TrackingPoint): Call<String>
+
+    //@POST("tracks")
+    //fun sendTracks(@Body tracksData: TracksData): Call<String>
+
+    //@POST("tracks")
+    //fun sendTracks(@Body tracksData: MutableList<TrackingPoint>): Call<String>
+
+    //@POST("violation")
+    //fun sendViolation(@Body violationData: TrackingPoint): Call<String>
+
     @POST("keys")
     fun sendKeys(@Body keysData: KeysData): Call<String>
 
@@ -24,8 +36,8 @@ interface ApiEndpoint {
         @Query("maxLng") maxLng: Double
     ): Call<KeysData>
 
-    @POST("tracks")
-    fun sendTracks(@Body tracksData: TracksData): Call<String>
+    //@POST("tracks")
+    //fun sendTracks(@Body tracksData: TracksData): Call<String>
 
     //@POST("tracks")
     //fun sendTracks(@Body tracksData: MutableList<TrackingPoint>): Call<String>

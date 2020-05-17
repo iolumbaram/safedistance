@@ -4,21 +4,35 @@ import android.bluetooth.*
 import android.bluetooth.le.*
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
 import android.media.AudioManager
 import android.media.ToneGenerator
+import android.os.Build
 import android.os.ParcelUuid
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
 import org.openexposuretrace.oextrace.MainActivity
 import org.openexposuretrace.oextrace.data.ADV_TAG
 import org.openexposuretrace.oextrace.data.Enums
 import org.openexposuretrace.oextrace.data.SCAN_TAG
+import org.openexposuretrace.oextrace.di.api.ApiClientProvider
 import org.openexposuretrace.oextrace.ext.data.insertLogs
 import org.openexposuretrace.oextrace.storage.BtContactsManager
 import org.openexposuretrace.oextrace.storage.BtEncounter
 import org.openexposuretrace.oextrace.distance.DistanceManager
+import org.openexposuretrace.oextrace.location.LocationUpdateManager
+import org.openexposuretrace.oextrace.service.TrackingService
+import org.openexposuretrace.oextrace.storage.TrackingManager
+import org.openexposuretrace.oextrace.storage.TrackingPoint
 import org.openexposuretrace.oextrace.utils.CryptoUtil
 import org.openexposuretrace.oextrace.utils.CryptoUtil.base64EncodedString
 import java.util.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DeviceManager(private val context: Context) {
 
@@ -40,6 +54,7 @@ class DeviceManager(private val context: Context) {
     private var advertisingActive = false
 
     private var deviceStatusListener: DeviceStatusListener? = null
+    private val apiClient by ApiClientProvider()
 
     /**
      * Check is Bluetooth LE is available and is it turned on
@@ -232,18 +247,38 @@ class DeviceManager(private val context: Context) {
 
         if (distance != null) {
             if(distance < 2.0) {
-                Log.d("debug", "toast?")
+                var lat = LocationUpdateManager.getLastLocation()?.latitude
+                var lon = LocationUpdateManager.getLastLocation()?.longitude
+                Log.d("debug", "Latitude ${lat} Longitude ${lon}")
                 val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 120)
                 toneG.startTone(ToneGenerator.TONE_CDMA_EMERGENCY_RINGBACK, 200)
 //                var mainActivity = MainActivity()
 //                mainActivity.popAlertNotification()
                 MainActivity.popAlertNotification()
+
+                // to update database via api
+                val location = Location(LocationUpdateManager.getLastLocation())
+                val gson = Gson()
+                println("Buzzer location:" + gson.toJson(location))
+                //apiClient.sendTracks(TrackingPoint(location))
+                apiClient.sendTracks(TrackingPoint(location) )
+                    .enqueue(object : Callback<String> {
+
+                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                            println("violation uploaded!")
+                        }
+
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                            println("ERROR: ${t.message}")
+                        }
+
+                    })
             }
         }
 
         insertLogs(
             SCAN_TAG,
-            "Recorded a contact with ${scanResult.device.address} RSSI ${scanResult.rssi} DISTANCE ${distance}"
+            "Recorded a contact with ${scanResult.device.address} RSSI ${scanResult.rssi} DISTANCE ${distance} Latitude${LocationUpdateManager.getLastLocation()?.latitude} Longitude ${LocationUpdateManager.getLastLocation()?.longitude}"
         )
 
         closeConnection()
