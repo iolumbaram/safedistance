@@ -50,6 +50,44 @@ object TracksManager : PreferencesHolder("tracks") {
         setLong(TRACKS_LAST_UPLOAD, value)
     }
 
+    /*
+    fun uploadNewTracks() {
+        val oldLastUploadTimestamp = getLastUploadTimestamp()
+        val now = System.currentTimeMillis()
+
+        val points = TrackingManager.getTrackingData().filter {
+            it.tst > oldLastUploadTimestamp
+        }
+
+        var pointsData: MutableList<TrackingPoint> = mutableListOf<TrackingPoint>()
+
+        points.forEach { point ->
+            pointsData.addAll(arrayListOf(point))
+        }
+
+        if (pointsData.isEmpty()) {
+            return
+        }
+
+        val gson = Gson()
+        println("LIST TO SEND OUT:" + gson.toJson(pointsData))
+
+        apiClient.sendTracks(pointsData )
+            .enqueue(object : Callback<String> {
+
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    println(String.format("response: %s", response))
+                    setLastUploadTimestamp(now)
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    println("ERROR: ${t.message}")
+                }
+
+            })
+    }
+    */
+
     fun uploadNewTracks() {
         val oldLastUploadTimestamp = getLastUploadTimestamp()
         val now = System.currentTimeMillis()
@@ -76,8 +114,7 @@ object TracksManager : PreferencesHolder("tracks") {
         }
 
         val tracksData = TracksData(tracks = tracksByDay.values.toList())
-
-        apiClient.sendTracks(tracksData)
+        apiClient.sendTracks(tracksData )
             .enqueue(object : Callback<String> {
 
                 override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -90,10 +127,11 @@ object TracksManager : PreferencesHolder("tracks") {
 
             })
     }
-
 }
 
 
 data class Track(var points: MutableList<TrackingPoint>, val day: Int, val key: String)
 
 data class TracksData(var tracks: List<Track>)
+
+data class TracksDataWithNoID(var points: MutableList<TrackingPoint>)

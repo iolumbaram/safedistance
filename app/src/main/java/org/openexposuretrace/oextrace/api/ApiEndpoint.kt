@@ -1,6 +1,7 @@
 package org.openexposuretrace.oextrace.api
 
 import org.openexposuretrace.oextrace.storage.KeysData
+import org.openexposuretrace.oextrace.storage.TrackingPoint
 import org.openexposuretrace.oextrace.storage.TracksData
 import retrofit2.Call
 import retrofit2.http.Body
@@ -25,6 +26,9 @@ interface ApiEndpoint {
 
     @POST("tracks")
     fun sendTracks(@Body tracksData: TracksData): Call<String>
+
+    //@POST("tracks")
+    //fun sendTracks(@Body tracksData: MutableList<TrackingPoint>): Call<String>
 
     @GET("tracks")
     fun fetchTracks(

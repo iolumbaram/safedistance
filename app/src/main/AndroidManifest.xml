@@ -16,6 +16,7 @@ package="org.openexposuretrace.oextrace">
     android:fullBackupContent="true"
     android:allowBackup="true"
     android:supportsRtl="true"
+    android:networkSecurityConfig="@xml/network_security_config"
     android:theme="@style/AppTheme">
 
     <activity android:name="org.openexposuretrace.oextrace.OnboardingActivity" />

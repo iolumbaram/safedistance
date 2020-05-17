@@ -1,5 +1,6 @@
 package org.openexposuretrace.oextrace.di.api
 
+import okhttp3.HttpUrl
 import okhttp3.ResponseBody
 import org.openexposuretrace.oextrace.BuildConfig.API_HOST
 import org.openexposuretrace.oextrace.api.ApiClient
@@ -16,7 +17,8 @@ internal object ApiClientProvider : IndependentProvider<ApiClient>() {
 
     private val httpClient by HttpClientProvider()
 
-    private const val STORAGE_ENDPOINT = "https://storage.$API_HOST/"
+    //private const val STORAGE_ENDPOINT = "https://storage.$API_HOST/"
+    private const val STORAGE_ENDPOINT = "http://178.128.113.15:5000/api/general/v1/"
 
     override fun initInstance(): ApiClient = Retrofit.Builder()
         .baseUrl(STORAGE_ENDPOINT)
