@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: at.favre.lib:hkdf:1.0.2@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/at.favre.lib/hkdf/1.0.2/fa8be2262e0276d713327dcafe15d303174a23ba/hkdf-1.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/at.favre.lib/hkdf/1.0.2/72c41e25b68d5e0a9bb438ffbb2d9479234bb43/hkdf-1.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/at.favre.lib/hkdf/1.0.2/74b4d4f40058980667550ad122166f14b165798e/hkdf-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

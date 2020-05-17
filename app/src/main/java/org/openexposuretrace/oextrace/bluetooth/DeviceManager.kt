@@ -4,8 +4,12 @@ import android.bluetooth.*
 import android.bluetooth.le.*
 import android.content.Context
 import android.content.pm.PackageManager
+import android.media.AudioManager
+import android.media.ToneGenerator
+import android.os.Build
 import android.os.ParcelUuid
 import android.util.Log
+import android.widget.Toast
 import org.openexposuretrace.oextrace.data.ADV_TAG
 import org.openexposuretrace.oextrace.data.Enums
 import org.openexposuretrace.oextrace.data.SCAN_TAG
@@ -14,6 +18,8 @@ import org.openexposuretrace.oextrace.storage.BtContactsManager
 import org.openexposuretrace.oextrace.storage.BtEncounter
 import org.openexposuretrace.oextrace.utils.CryptoUtil
 import org.openexposuretrace.oextrace.utils.CryptoUtil.base64EncodedString
+import java.io.File
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -229,6 +235,20 @@ class DeviceManager(private val context: Context) {
             SCAN_TAG,
             "Recorded a contact with ${scanResult.device.address} RSSI ${scanResult.rssi}"
         )
+
+        val file = File(context.filesDir, "log_records.txt")
+        val currentDateTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime.now()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
+        file.appendText("\n" + "${currentDateTime} Scanned RSSI: ${scanResult.rssi}, - ${scanResult.device.address}")
+
+        val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+        if(scanResult.rssi < -60){
+            toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
+            Toast.makeText(context, "Too near", Toast.LENGTH_SHORT).show()
+        }
 
         closeConnection()
     }
