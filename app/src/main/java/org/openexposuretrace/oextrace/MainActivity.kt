@@ -21,6 +21,7 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.contentValuesOf
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.common.api.ResolvableApiException
@@ -52,6 +53,11 @@ import kotlin.math.abs
 class MainActivity : AppCompatActivity() {
 
     companion object {
+        fun popAlertNotification() {
+            //Toast.makeText(Context.Ma, "Too near", Toast.LENGTH_LONG).show()
+            Log.d("debug", "toast2")
+        }
+
         const val REQUEST_NONE = 0
         const val REQUEST_LOCATION = 1
         const val REQUEST_CHECK_TRACKING_SETTINGS = 2
@@ -329,13 +335,13 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    public fun popAlertNotification(){
-//        val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
-//        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
-        Runnable {
-            Toast.makeText(this, "Too near", Toast.LENGTH_LONG).show()
-            Log.d("debug", "toast2")
-        }
-        Log.d("debug", "toast1")
-    }
+//    fun popAlertNotification(){
+////        val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+////        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
+//        Runnable {
+//            Toast.makeText(this, "Too near", Toast.LENGTH_LONG).show()
+//            Log.d("debug", "toast2")
+//        }
+//        Log.d("debug", "toast1")
+//    }
 }

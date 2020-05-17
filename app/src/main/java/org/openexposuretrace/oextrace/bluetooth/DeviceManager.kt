@@ -8,6 +8,7 @@ import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.ParcelUuid
 import android.util.Log
+import org.openexposuretrace.oextrace.MainActivity
 import org.openexposuretrace.oextrace.data.ADV_TAG
 import org.openexposuretrace.oextrace.data.Enums
 import org.openexposuretrace.oextrace.data.SCAN_TAG
@@ -237,10 +238,11 @@ class DeviceManager(private val context: Context) {
         if (distance != null) {
             if(distance < 2.0) {
                 Log.d("debug", "toast?")
-                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
-                toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
-                //var mainActivity = MainActivity()
-                //mainActivity.popAlertNotification()
+                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 120)
+                toneG.startTone(ToneGenerator.TONE_CDMA_EMERGENCY_RINGBACK, 200)
+//                var mainActivity = MainActivity()
+//                mainActivity.popAlertNotification()
+                MainActivity.popAlertNotification()
             }
         }
 
