@@ -238,16 +238,7 @@ class DeviceManager(private val context: Context) {
             "Recorded a contact with ${scanResult.device.address} RSSI ${scanResult.rssi}"
         )
 
-        val file = File(context.filesDir, "log_records.txt")
-        val currentDateTime = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDateTime.now()
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-        file.appendText("\n" + "${currentDateTime} Scanned RSSI: ${scanResult.rssi}, - ${scanResult.device.address}")
-
-
-        if(scanResult.rssi < -60){
+        if(scanResult.rssi < -30){
             Log.d("debug", "toast?")
             val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
             toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
