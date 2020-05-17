@@ -7,9 +7,8 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="org.openexposuretrace.oextrace.MainFragment"
-        android:label="@string/title_map"
-        tools:layout="@layout/fragment_main" />
+        android:name="org.openexposuretrace.oextrace.ui.map.MapFragment"
+        android:label="@string/title_map" />
 
     <fragment
         android:id="@+id/navigation_status"

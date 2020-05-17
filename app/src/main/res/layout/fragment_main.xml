@@ -5,41 +5,12 @@
     android:layout_height="match_parent"
     tools:context="org.openexposuretrace.oextrace.MainFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/SafeDistanceLogo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#0057B9"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="20dp"
-        android:visibility="visible">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_last_update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="7dp"
-            android:text="Last update: X:XX XX"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/SafeDistanceLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#0057B9"
-            android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/safedistance_squarelogo" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:padding="10dp"
+        app:srcCompat="@drawable/safedistance_squarelogo" />
 
 </FrameLayout>
