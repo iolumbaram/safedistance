@@ -227,16 +227,10 @@ class DeviceManager(private val context: Context) {
         val day = CryptoUtil.currentDayNumber()
         BtContactsManager.addContact(rollingId, day, BtEncounter(scanResult.rssi, meta))
 
-        insertLogs(
-            SCAN_TAG,
-            "Recorded a contact with ${scanResult.device.address} RSSI ${scanResult.rssi}"
-        )
-
         var distance = DistanceManager.calculateDistance(scanResult.rssi)
 
         if (distance != null) {
             if(distance < 2.0) {
-                Log.d("debug", "toast?")
                 val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
                 toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
                 //var mainActivity = MainActivity()
@@ -244,15 +238,11 @@ class DeviceManager(private val context: Context) {
             }
         }
 
-        /*
-        if(scanResult.rssi < -30){
-            Log.d("debug", "toast?")
-            val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
-            toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
-            //var mainActivity = MainActivity()
-            //mainActivity.popAlertNotification()
-        }
-*/
+        insertLogs(
+            SCAN_TAG,
+            "Recorded a contact with ${scanResult.device.address} RSSI ${scanResult.rssi} DISTANCE ${distance}"
+        )
+
         closeConnection()
     }
 
