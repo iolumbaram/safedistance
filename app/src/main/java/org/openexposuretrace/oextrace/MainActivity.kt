@@ -10,6 +10,8 @@ import android.content.IntentSender.SendIntentException
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.media.AudioManager
+import android.media.ToneGenerator
 import android.net.Uri
 import android.os.Bundle
 import android.os.IBinder
@@ -135,6 +137,7 @@ class MainActivity : AppCompatActivity() {
             Intent(this, BleUpdatesService::class.java), serviceConnection,
             Context.BIND_AUTO_CREATE
         )
+
     }
 
     override fun onStop() {
@@ -326,4 +329,13 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
+    public fun popAlertNotification(){
+//        val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+//        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
+        Runnable {
+            Toast.makeText(this, "Too near", Toast.LENGTH_LONG).show()
+            Log.d("debug", "toast2")
+        }
+        Log.d("debug", "toast1")
+    }
 }

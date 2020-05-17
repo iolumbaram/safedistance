@@ -10,6 +10,8 @@ import android.os.Build
 import android.os.ParcelUuid
 import android.util.Log
 import android.widget.Toast
+import com.google.android.material.internal.ContextUtils.getActivity
+import org.openexposuretrace.oextrace.MainActivity
 import org.openexposuretrace.oextrace.data.ADV_TAG
 import org.openexposuretrace.oextrace.data.Enums
 import org.openexposuretrace.oextrace.data.SCAN_TAG
@@ -244,10 +246,13 @@ class DeviceManager(private val context: Context) {
         }
         file.appendText("\n" + "${currentDateTime} Scanned RSSI: ${scanResult.rssi}, - ${scanResult.device.address}")
 
-        val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+
         if(scanResult.rssi < -60){
+            Log.d("debug", "toast?")
+            val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
             toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
-            Toast.makeText(context, "Too near", Toast.LENGTH_SHORT).show()
+            var mainActivity = MainActivity()
+            mainActivity.popAlertNotification()
         }
 
         closeConnection()
