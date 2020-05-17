@@ -56,10 +56,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_map, container, false)
 
-        mapView = root.findViewById(R.id.map)
-        mapView.onCreate(savedInstanceState)
-
-        mapView.getMapAsync(this)
+//        mapView = root.findViewById(R.id.map)
+//        mapView.onCreate(savedInstanceState)
+//
+//        mapView.getMapAsync(this)
 
         return root
     }
@@ -68,54 +68,54 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         EventBus.getDefault().register(this)
         logsButton.setOnClickListener { showLogs() }
-        recordContactButton.setOnClickListener { showQrCode() }
+//        recordContactButton.setOnClickListener { showQrCode() }
 
-        zoomInButton.setOnClickListener {
-            googleMap?.let { map ->
-                map.animateCamera(
-                    CameraUpdateFactory.zoomTo((map.cameraPosition.zoom.roundToInt() + 1).toFloat())
-                )
-            }
-        }
-
-        zoomOutButton.setOnClickListener {
-            googleMap?.let { map ->
-                map.animateCamera(
-                    CameraUpdateFactory.zoomTo((map.cameraPosition.zoom.roundToInt() - 1).toFloat())
-                )
-            }
-        }
-
-        myLocationButton.setOnClickListener {
-            LocationUpdateManager.getLastLocation()?.let { location ->
-                googleMap?.animateCamera(
-                    CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude))
-                )
-            }
-        }
+//        zoomInButton.setOnClickListener {
+//            googleMap?.let { map ->
+//                map.animateCamera(
+//                    CameraUpdateFactory.zoomTo((map.cameraPosition.zoom.roundToInt() + 1).toFloat())
+//                )
+//            }
+//        }
+//
+//        zoomOutButton.setOnClickListener {
+//            googleMap?.let { map ->
+//                map.animateCamera(
+//                    CameraUpdateFactory.zoomTo((map.cameraPosition.zoom.roundToInt() - 1).toFloat())
+//                )
+//            }
+//        }
+//
+//        myLocationButton.setOnClickListener {
+//            LocationUpdateManager.getLastLocation()?.let { location ->
+//                googleMap?.animateCamera(
+//                    CameraUpdateFactory.newLatLng(LatLng(location.latitude, location.longitude))
+//                )
+//            }
+//        }
     }
 
     override fun onMapReady(map: GoogleMap) {
-        googleMap = map
-
-        map.uiSettings.isMapToolbarEnabled = false
-        map.uiSettings.isMyLocationButtonEnabled = false
-        map.uiSettings.isIndoorLevelPickerEnabled = false
-        map.uiSettings.isCompassEnabled = true
-
-        LocationUpdateManager.registerCallback { location ->
-            activity?.runOnUiThread {
-                map.moveCamera(
-                    CameraUpdateFactory.newCameraPosition(
-                        CameraPosition.Builder()
-                            .target(LatLng(location.latitude, location.longitude))
-                            .zoom(14f)
-                            .build()
-                    )
-                )
-                map.isMyLocationEnabled = true
-            }
-        }
+//        googleMap = map
+//
+//        map.uiSettings.isMapToolbarEnabled = false
+//        map.uiSettings.isMyLocationButtonEnabled = false
+//        map.uiSettings.isIndoorLevelPickerEnabled = false
+//        map.uiSettings.isCompassEnabled = true
+//
+//        LocationUpdateManager.registerCallback { location ->
+//            activity?.runOnUiThread {
+//                map.moveCamera(
+//                    CameraUpdateFactory.newCameraPosition(
+//                        CameraPosition.Builder()
+//                            .target(LatLng(location.latitude, location.longitude))
+//                            .zoom(14f)
+//                            .build()
+//                    )
+//                )
+//                map.isMyLocationEnabled = true
+//            }
+//        }
 
         updateContacts()
     }
@@ -127,8 +127,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onUpdateUserTracksEvent(event: UpdateLocationAccuracyEvent) {
-        accuracyText.text = getString(R.string.accuracy_text, event.accuracy)
-        accuracyText.visibility = VISIBLE
+//        accuracyText.text = getString(R.string.accuracy_text, event.accuracy)
+//        accuracyText.visibility = VISIBLE
     }
 
     private fun updateUserTracks() {
@@ -281,44 +281,44 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onResume() {
         super.onResume()
-        updateUserTracks()
+//        updateUserTracks()
 
-        LocationUpdateManager.registerCallback { location ->
-            loadTracks(location)
-            loadDiagnosticKeys(location)
-        }
+//        LocationUpdateManager.registerCallback { location ->
+//            loadTracks(location)
+//            loadDiagnosticKeys(location)
+//        }
 
-        mapView.onResume()
+        //        mapView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
 
-        mapView.onPause()
+        //        mapView.onPause()
     }
 
     override fun onStart() {
         super.onStart()
 
-        mapView.onStart()
+        //        mapView.onStart()
     }
 
     override fun onStop() {
         super.onStop()
 
-        mapView.onStop()
+        //        mapView.onStop()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
 
-        mapView.onLowMemory()
+        //        mapView.onLowMemory()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        mapView.onSaveInstanceState(outState)
+        //        mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
@@ -328,7 +328,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onDestroy() {
-        mapView.onDestroy()
+        //        mapView.onDestroy()
 
         super.onDestroy()
     }
