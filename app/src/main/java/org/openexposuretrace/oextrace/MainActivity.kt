@@ -90,15 +90,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
 
-        if (!OnboardingManager.isComplete()) {
-            val intent = Intent(this, OnboardingActivity::class.java)
-
-            intent.putExtra(STAGE_EXTRA, OnboardingStage.WELCOME)
-
-            startActivity(intent)
-
-            return
-        }
+        startActivity(Intent(this, SplashActivity::class.java))
 
         handleDeepLink()
     }
